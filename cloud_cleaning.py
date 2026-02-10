@@ -14,6 +14,22 @@ def get_frame(input_file):
     
     return in_frame
 
+def clean_nulls(input_frame):
+    """
+    Docstring for clean_nulls
+
+    Imports a DataFrame and performs null handling operations on all fields
+
+    EPastore, 02/09/2026
+    
+    :param input_frame: takes in a DataFrame
+    """
+    output_frame = input_frame
+
+    output_frame.dropna()
+
+    return output_frame
+
 def main():
     """
     Docstring for main
@@ -22,7 +38,7 @@ def main():
 
     EPastore, 02/07/2026
     """
-    print(get_frame('cloud_data.csv').head(100))
+    print(clean_nulls(get_frame('cloud_data.csv').head(100)))
 
 if __name__ == "__main__":
     main()
