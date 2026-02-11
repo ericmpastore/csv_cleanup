@@ -26,7 +26,8 @@ def clean_nulls(input_frame):
     """
     output_frame = input_frame
 
-    output_frame.dropna()
+    output_frame['vm_id'] = output_frame['vm_id'].dropna()
+    output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(0)
 
     return output_frame
 
@@ -39,6 +40,7 @@ def main():
     EPastore, 02/07/2026
     """
     print(clean_nulls(get_frame('cloud_data.csv').head(100)))
+    print(get_frame('cloud_data.csv').describe())
 
 if __name__ == "__main__":
     main()
