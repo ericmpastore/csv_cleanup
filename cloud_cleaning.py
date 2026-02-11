@@ -26,8 +26,14 @@ def clean_nulls(input_frame):
     """
     output_frame = input_frame
 
+    # Handle numerical nulls using fillna(0)
     output_frame['vm_id'] = output_frame['vm_id'].dropna()
     output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(0)
+    output_frame['memory_usage'] = output_frame['memory_usage'].fillna(0)
+
+    # Handle timestamp nulls
+
+    # Handle task field nulls
 
     return output_frame
 
