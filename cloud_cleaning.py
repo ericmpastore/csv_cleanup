@@ -35,6 +35,8 @@ def clean_nulls(input_frame):
 
     # Handle task field nulls
 
+    # Handle remaining nulls
+
     return output_frame
 
 def main():
