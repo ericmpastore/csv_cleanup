@@ -27,7 +27,7 @@ def clean_nulls(input_frame):
     output_frame = input_frame
 
     # Handle numerical nulls using fillna(0)
-    output_frame['vm_id'] = output_frame['vm_id'].dropna()
+    output_frame['vm_id'] = output_frame['vm_id'].fillna('zzzz-zzzz')
     output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(0)
     output_frame['memory_usage'] = output_frame['memory_usage'].fillna(0)
 
@@ -47,8 +47,10 @@ def main():
 
     EPastore, 02/07/2026
     """
-    print(clean_nulls(get_frame('cloud_data.csv').head(100)))
-    print(get_frame('cloud_data.csv').describe())
+    clean_frame = clean_nulls(get_frame('cloud_data.csv'))
+    # print(clean_nulls(get_frame('cloud_data.csv').head(100)))
+    # print(get_frame('cloud_data.csv').describe())
+    print(clean_frame.describe())
 
 if __name__ == "__main__":
     main()
