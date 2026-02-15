@@ -26,8 +26,13 @@ def clean_nulls(input_frame):
     """
     output_frame = input_frame
 
+    # Handle blank vm_ids with an incrementing id value, EPastore 02152026
+    # output_frame['vm_id'] = output_frame['vm_id'].fillna('zzzz-zzzz')
+    mask = output_frame['vm_id'].isna()
+    null_count = mask.sum()
+    output_frame.loc[mask,'vm_id'] = [f'zzzz-zzzz-{i:04d}' for i in range(1,null_count+1)]
+
     # Handle numerical nulls using fillna(0)
-    output_frame['vm_id'] = output_frame['vm_id'].fillna('zzzz-zzzz')
     output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(0)
     output_frame['memory_usage'] = output_frame['memory_usage'].fillna(0)
 
@@ -50,7 +55,8 @@ def main():
     clean_frame = clean_nulls(get_frame('cloud_data.csv'))
     # print(clean_nulls(get_frame('cloud_data.csv').head(100)))
     # print(get_frame('cloud_data.csv').describe())
-    print(clean_frame.describe())
+    # print(clean_frame.describe())
+    clean_frame.to_csv('cleaned_data.csv')
 
 if __name__ == "__main__":
     main()
