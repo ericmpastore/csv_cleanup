@@ -27,16 +27,16 @@ def clean_nulls(input_frame):
     output_frame = input_frame
 
     # Handle blank vm_ids with an incrementing id value, EPastore 02152026
-    # output_frame['vm_id'] = output_frame['vm_id'].fillna('zzzz-zzzz')
     mask = output_frame['vm_id'].isna()
     null_count = mask.sum()
     output_frame.loc[mask,'vm_id'] = [f'zzzz-zzzz-{i:04d}' for i in range(1,null_count+1)]
 
-    # Handle numerical nulls using fillna(0)
-    output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(0)
-    output_frame['memory_usage'] = output_frame['memory_usage'].fillna(0)
+    # Handle numerical nulls using fillna(mean), EPastore 02162026
+    output_frame['cpu_usage'] = output_frame['cpu_usage'].fillna(output_frame['cpu_usage'].mean())
+    output_frame['memory_usage'] = output_frame['memory_usage'].fillna(output_frame['memory_usage'].mean())
 
-    # Handle timestamp nulls
+    # Handle timestamp nulls using the backwards fill method, EPastore 02162026
+    output_frame['timestamp'] = output_frame['timestamp'].bfill()
 
     # Handle task field nulls
 
