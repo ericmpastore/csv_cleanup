@@ -59,8 +59,9 @@ def main():
     EPastore, 02/07/2026
     """
     clean_frame = clean_nulls(get_frame('C:\\Users\\epas0\\OneDrive\\vmCloud_data.csv'))
+    sample_frame = clean_nulls(get_frame('cloud_data.csv'))
     print(clean_frame.describe())
-    clean_frame.to_csv('C:\\Users\\epas0\\OneDrive\\cleaned_data.csv')
+    print(sample_frame.describe())
 
 if __name__ == "__main__":
     main()
